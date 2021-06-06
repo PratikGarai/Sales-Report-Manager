@@ -36,12 +36,6 @@ class Sale(models.Model):
             self.transaction_id = generate_code()
         if self.created is None:
             self.created = timezone.now()
-        
-        # s = 0
-        # for i in self.get_positions():
-        #     s += i.price
-        # self.total_price = s
-
         return super().save(*args, **kwargs)
     
     def get_positions(self):
