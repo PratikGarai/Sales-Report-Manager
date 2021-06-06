@@ -6,11 +6,18 @@
 
 
 {% block content %}
-    <h1>Hello World!</h1>
-    <hr />
+    <h1>Search for reports</h1>
+    <hr>
     <form action="" method="POST">
         {% csrf_token %}
         {{form|crispy}}
         <button type="submit" class="btn btn-primary mt-3">Search</button>
     </form>
+
+    <br>
+    {% if sales_df %}
+        {{sales_df|safe}}
+    {% else %}
+        <h3>No data available</h3>
+    {% endif %}
 {% endblock content %}
