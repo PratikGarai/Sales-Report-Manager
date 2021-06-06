@@ -1,3 +1,4 @@
+from .utils import generate_code
 from customers.models import Customer
 from profiles.models import Profile
 from products.models import Product
@@ -21,7 +22,7 @@ class Position(models.Model):
 class Sale(models.Model):
     transaction_id = models.CharField(max_length=12, blank=True)
     positions = models.ManyToManyField(Position)
-    total_price = models.FloatField(blank=True)
+    total_price = models.FloatField(blank=True, null=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     salesman = models.ForeignKey(Profile, on_delete=models.CASCADE)
     created = models.DateField(blank=True)
@@ -32,9 +33,15 @@ class Sale(models.Model):
     
     def save(self, *args, **kwargs):
         if self.transaction_id=="":
-            self.transaction_id = ''
+            self.transaction_id = generate_code()
         if self.created is None:
             self.created = timezone.now()
+        
+        # s = 0
+        # for i in self.get_positions():
+        #     s += i.price
+        # self.total_price = s
+
         return super().save(*args, **kwargs)
     
     def get_positions(self):
