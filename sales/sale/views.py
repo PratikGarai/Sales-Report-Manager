@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from .models import Sale
 
 def home_view(request):
@@ -9,3 +9,7 @@ def home_view(request):
 class SalesListView(ListView):
     model = Sale
     template_name = "sale/main.html"
+
+class SaleDetailView(DetailView):
+    model = Sale
+    template_name = "sale/detail.html"

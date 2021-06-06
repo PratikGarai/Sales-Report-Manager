@@ -4,6 +4,7 @@ from profiles.models import Profile
 from products.models import Product
 from django.db import models
 from django.utils import timezone
+from django.shortcuts import reverse
 
 class Position(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -40,6 +41,9 @@ class Sale(models.Model):
     
     def get_positions(self):
         return self.positions.all()
+    
+    def get_absolute_url(self):
+        return reverse("sale:detail", kwargs={'pk' : self.pk})
 
 
 class CSV(models.Model):
