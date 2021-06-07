@@ -30,6 +30,11 @@
             <h4>Merged Data</h4>
             {{merge_df|safe}}
         {% endif %}
+        <br>
+        {% if chart %}
+            <h4>Chart</h4>
+            <img src="data:image/png;base64, {{chart|safe}}">
+        {% endif %}
     {% else %}
         <h3>No data available</h3>
     {% endif %}
