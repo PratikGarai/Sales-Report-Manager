@@ -5,7 +5,7 @@ from profiles.models import Profile
 from io import BytesIO
 import base64
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 def generate_code() :
     code = str(uuid.uuid4()).replace('-', '')[:12]
@@ -38,14 +38,15 @@ def get_chart(chart_type, data, **kwargs):
     fig = plt.figure(figsize=(10, 4))
     if chart_type=="#1":
         print("Bar chart")
-        plt.bar(data['transaction_id'], data['total_price'])
+        # plt.bar(data['transaction_id'], data['total_price'])
+        sns.barplot(x='transaction_id', y='total_price', data=data)
     elif chart_type=="#2":
         print("Pie chart")
         label = kwargs.get('labels')
         plt.pie(data = data[['transaction_id', 'total_price']], x='total_price', labels=label)
     elif chart_type=="#3":
         print("Line chart")
-        plt.plot(data['transaction_id'],data['total_price'])
+        plt.plot(data['transaction_id'],data['total_price'], marker='o', color='green', linestyle='--')
     else : 
         print("Invalid chart type")
     plt.tight_layout()
