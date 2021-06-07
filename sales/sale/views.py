@@ -14,11 +14,13 @@ def home_view(request):
     chart = None
     searchForm = SalesSearchForm(request.POST or None)
     reportForm = ReportForm()
+    no_data = False
 
     if request.method=='POST':
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
         chart_type = request.POST.get('chart_type')
+        results_by = request.POST.get('results_by')
         qs = Sale.objects.filter(created__gte=date_from, created__lte=date_to)
 
         if len(qs)>0:
@@ -49,12 +51,13 @@ def home_view(request):
 
             pos_df = pd.DataFrame(positions_data)
             merged_df = pd.merge(sale_df, pos_df, on='sales_id')
-            chart = get_chart(chart_type, sale_df, labels=sale_df['transaction_id'].values)
+            chart = get_chart(chart_type, sale_df, results_by)
 
             pos_df = pos_df.to_html()
             sale_df = sale_df.to_html()
             merged_df = merged_df.to_html()
         else :
+            no_data = True
             print('No sale data for the date query')
 
     context = {
@@ -63,7 +66,8 @@ def home_view(request):
         'pos_df' : pos_df,
         'merge_df' : merged_df,
         'chart' : chart,
-        'report_form' : reportForm
+        'report_form' : reportForm,
+        'no_data' : no_data
     }
     return render(request, "sale/home.html", context)
 

@@ -33,20 +33,29 @@ def get_graph():
     return graph
 
 
-def get_chart(chart_type, data, **kwargs):
+def get_key(res_by):
+    if res_by=="#1":
+        return "transaction_id"
+    elif res_by=="#2":
+        return "created"
+
+
+def get_chart(chart_type, data, result_by, **kwargs):
     plt.switch_backend('AGG')
     fig = plt.figure(figsize=(10, 4))
+    key = get_key(result_by)
+    d = data.groupby(key, as_index=False)['total_price'].agg(sum)
     if chart_type=="#1":
         print("Bar chart")
-        # plt.bar(data['transaction_id'], data['total_price'])
-        sns.barplot(x='transaction_id', y='total_price', data=data)
+        # plt.bar(d['transaction_id'], d['total_price'])
+        sns.barplot(x=key, y='total_price', data=d)
     elif chart_type=="#2":
         print("Pie chart")
-        label = kwargs.get('labels')
-        plt.pie(data = data[['transaction_id', 'total_price']], x='total_price', labels=label)
+        label = d[key].values
+        plt.pie(data = d[[key, 'total_price']], x='total_price', labels=label)
     elif chart_type=="#3":
         print("Line chart")
-        plt.plot(data['transaction_id'],data['total_price'], marker='o', color='green', linestyle='--')
+        plt.plot(d[key],d['total_price'], marker='o', color='green', linestyle='--')
     else : 
         print("Invalid chart type")
     plt.tight_layout()

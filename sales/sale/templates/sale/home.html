@@ -13,6 +13,13 @@
 {% block content %}
     <h1>Search for reports</h1>
     <hr>
+
+    {% if no_data %}
+        <div class="alert alert-warning" role="alert">
+            No data found during this time frame
+        </div>
+    {% endif %}
+
     <form action="" method="POST">
         {% csrf_token %}
         {{search_form|crispy}}
@@ -68,7 +75,5 @@
                 </div>
               </div>
         {% endif %}
-    {% else %}
-        <h3>No data available</h3>
     {% endif %}
 {% endblock content %}
