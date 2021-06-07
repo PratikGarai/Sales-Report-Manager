@@ -15,7 +15,7 @@
     <hr>
     <form action="" method="POST">
         {% csrf_token %}
-        {{form|crispy}}
+        {{search_form|crispy}}
         <button type="submit" class="btn btn-primary mt-3">Search</button>
     </form>
 
@@ -53,13 +53,17 @@
                       <h5 class="modal-title" id="reportModalLabel">Modal title</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      ...
+                    <div class="modal-body" id="modal-body">
+                        <div id="alert-box"></div>
+                        <form id="report-form">
+                            {% csrf_token %}
+                            {{report_form|crispy}}
+                            <button type="submit" class="btn btn-primary mt-3">Save Report</button>
+                      </form>
                     </div>
-                    <div class="modal-footer">
+                    {% comment %} <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                    </div> {% endcomment %}
                   </div>
                 </div>
               </div>

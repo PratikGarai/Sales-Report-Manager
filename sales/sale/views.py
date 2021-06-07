@@ -4,14 +4,17 @@ from .models import Sale
 from .forms import SalesSearchForm
 import pandas as pd
 from .utils import get_customer_from_id, get_salesman_from_id, get_chart
+from report.forms import ReportForm
 
 
 def home_view(request):
-    form = SalesSearchForm(request.POST or None)
     sale_df = None
     pos_df = None
     merged_df = None
     chart = None
+    searchForm = SalesSearchForm(request.POST or None)
+    reportForm = ReportForm()
+
     if request.method=='POST':
         date_from = request.POST.get('date_from')
         date_to = request.POST.get('date_to')
@@ -55,11 +58,12 @@ def home_view(request):
             print('No sale data for the date query')
 
     context = {
-        'form' : form,
+        'search_form' : searchForm,
         'sales_df' : sale_df,
         'pos_df' : pos_df,
         'merge_df' : merged_df,
-        'chart' : chart
+        'chart' : chart,
+        'report_form' : reportForm
     }
     return render(request, "sale/home.html", context)
 
