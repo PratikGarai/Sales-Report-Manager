@@ -10,4 +10,4 @@ class Report(models.Model):
     updated = models.DateField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.author.user.username + " " + str(self.created)
