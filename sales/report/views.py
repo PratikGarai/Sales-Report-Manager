@@ -3,6 +3,7 @@ from profiles.models import Profile
 from django.http import JsonResponse
 from .utils import get_report_img
 from .models import Report
+from django.views.generic import ListView, DetailView
 
 def create_report_view(request):
     if request.is_ajax() :
@@ -18,3 +19,13 @@ def create_report_view(request):
         })
     
     return JsonResponse({})
+
+
+class ReportListView(ListView):
+    model = Report
+    template_name = 'report/main.html'
+
+
+class ReportDetailView(DetailView):
+    model = Report
+    template_name = 'report/detail.html'

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from profiles.models import Profile
 
 class Report(models.Model):
@@ -11,3 +12,9 @@ class Report(models.Model):
 
     def __str__(self):
         return self.author.user.username + " " + str(self.created)
+
+    def get_absolute_url(self):
+        return reverse('report:detail', kwargs={'pk' : self.pk}  )
+
+    class Meta :
+        ordering = ('-created',)
