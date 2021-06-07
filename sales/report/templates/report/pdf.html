@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{object}} | PDF</title>
+</head>
+<body>
+    <h1>Report : </h1>
+    <hr>
+    {% if object.image %}
+        <img src="{{object.image.path}}" class="img-fluid" alt="{{object}}">
+    {% endif %}
+    <br>
+    <h3>Remarks</h3>
+    <p>
+        {{object.remarks}}
+    </p>
+    <hr>
+    <p>
+        Author : <b>{{object.author.user.username|capfirst}}</b>
+    </p>
+    <p>
+        Created on : <b>{{object.created}}</b>
+    </p>
+</body>
+</html>

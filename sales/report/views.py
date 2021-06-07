@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from profiles.models import Profile
 from django.http import JsonResponse
 from .utils import get_report_img
 from .models import Report
 from django.views.generic import ListView, DetailView
+from django.template.loader import get_template
+from django.http.response import HttpResponse
+from xhtml2pdf import pisa
+
 
 def create_report_view(request):
     if request.is_ajax() :
@@ -29,3 +33,26 @@ class ReportListView(ListView):
 class ReportDetailView(DetailView):
     model = Report
     template_name = 'report/detail.html'
+
+
+def render_pdf_view(request, pk):
+    template_path = 'report/pdf.html'
+    response = HttpResponse(content_type='application/pdf')
+    obj = get_object_or_404(Report, pk=pk)
+    context = {'object' : obj}
+
+
+    # if download
+    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+
+    # if display
+    # response['Content-Disposition'] = 'filename="report.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+    pisa_status = pisa.CreatePDF(
+       html, dest=response
+    )
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
