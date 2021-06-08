@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Upload CSV
+{% endblock title %}
+
+{% block scripts %}
+    <script src="{% static 'sale/upload.js' %}" defer></script>
+{% endblock scripts %}
+
+{% block content %}
+    <h4>Upload your sales documents here: </h4>
+    <br>
+    <form id="my-dropzone" class="dropzone dz">
+        {% csrf_token %}
+        <div class="fallback">
+            <input name="file" type="file" multiple />
+        </div>
+    </form>
+{% endblock content %}
