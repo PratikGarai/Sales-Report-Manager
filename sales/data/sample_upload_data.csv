@@ -1,0 +1,6 @@
+Pos,transaction_id,product,quantity,customer,date
+1,97d783d2ada1,TV,3,Customer 1,13-06-2021
+2,97d783d2ada2,Laptop,2,Customer 1,13-06-2021
+3,97d783d2ada3,TV,1,Customer 1,15-06-2021
+4,97d783d2ada4,Laptop,1,Customer 1,15-06-2021
+5,97d783d2ada5,Mobile,3,Customer 1,15-06-2021
