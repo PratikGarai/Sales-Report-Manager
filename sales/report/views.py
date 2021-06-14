@@ -1,14 +1,19 @@
 from django.shortcuts import get_object_or_404, render
-from profiles.models import Profile
-from django.http import JsonResponse
-from .utils import get_report_img
-from .models import Report
 from django.views.generic import ListView, DetailView
 from django.template.loader import get_template
 from django.http.response import HttpResponse
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from profiles.models import Profile
+from .utils import get_report_img
+from .models import Report
+
 from xhtml2pdf import pisa
 
 
+@login_required
 def create_report_view(request):
     if request.is_ajax() :
         name = request.POST.get('name')
@@ -25,16 +30,17 @@ def create_report_view(request):
     return JsonResponse({})
 
 
-class ReportListView(ListView):
+class ReportListView(LoginRequiredMixin, ListView):
     model = Report
     template_name = 'report/main.html'
 
 
-class ReportDetailView(DetailView):
+class ReportDetailView(LoginRequiredMixin, DetailView):
     model = Report
     template_name = 'report/detail.html'
 
 
+@login_required
 def render_pdf_view(request, pk):
     template_path = 'report/pdf.html'
     response = HttpResponse(content_type='application/pdf')

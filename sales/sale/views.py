@@ -2,6 +2,8 @@ from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.dateparse import parse_date
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Sale
 from .forms import SalesSearchForm
@@ -16,6 +18,7 @@ import pandas as pd
 import csv
 
 
+@login_required
 def home_view(request):
     sale_df = None
     pos_df = None
@@ -81,20 +84,21 @@ def home_view(request):
     return render(request, "sale/home.html", context)
 
 
-class SalesListView(ListView):
+class SalesListView(LoginRequiredMixin, ListView):
     model = Sale
     template_name = "sale/main.html"
 
 
-class SaleDetailView(DetailView):
+class SaleDetailView(LoginRequiredMixin, DetailView):
     model = Sale
     template_name = "sale/detail.html"
 
 
-class UploadView(TemplateView):
+class UploadView(LoginRequiredMixin, TemplateView):
     template_name = "sale/from_file.html"
 
 
+@login_required
 def csv_upload_view(request):
     if request.method=="POST":
         csv_file = request.FILES.get('file')
