@@ -3,11 +3,18 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from .views import (
+    login_view, 
+    logout_view
+)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sale.urls'), name='sale'),
     path('reports/', include('report.urls'), name='report'),
-    path('profile/', include('profiles.urls'), name='profiles')
+    path('profile/', include('profiles.urls'), name='profiles'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
