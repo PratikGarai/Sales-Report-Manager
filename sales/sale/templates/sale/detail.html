@@ -5,5 +5,15 @@
 {% endblock title %}
 
 {% block content %}
-    Detail {{object.transaction_id}}
+    <h2>Sales Detail - </h2>
+    <br>
+    <h4>Transaction id : {{object.transaction_id}}</h4>
+    <h4>Total price : Rs. {{object.total_price}}</h4>
+    <hr>
+    {% for obj in object.positions.all %}
+        <div class="card mb-3 p-3">
+            Product Name : {{obj.name}}<br>
+            Product Quantity : {{obj.quantity}}
+        </div>
+    {% endfor %}
 {% endblock content %}
