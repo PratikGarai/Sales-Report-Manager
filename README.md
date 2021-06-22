@@ -8,4 +8,4 @@ Some key features include :
 2. Visualize various kind of charts based on day-wise and one-off transaction wise sales.
 3. Save the generated plots with your own remarks for later use.
 4. Download reports as pdf.
-5. Upload data in given format to automatically update database.
+5. Upload data in <a href="https://github.com/PratikGarai/Sales-Report-Manager/blob/master/sales/data/sample_upload_data.csv">this format</a> to automatically update database.
